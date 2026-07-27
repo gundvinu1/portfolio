@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vinayakgund.dev"),
+  metadataBase: new URL("https://vinayakgund.in"),
   title: {
     default: "Vinayak Rajendra Gund | AI/ML Engineer & Software Developer",
     template: "%s | Vinayak Gund",
@@ -19,28 +19,31 @@ export const metadata: Metadata = {
     "AI/ML Engineer, Software Developer, Data Analyst, and Big Data Engineer from Pune, India. Building AI-powered software, automation platforms, and data systems.",
   keywords: [
     "Vinayak Gund",
-    "AI ML Engineer",
-    "Machine Learning",
+    "Vinayak Rajendra Gund",
+    "vinayakgund.in",
+    "Vinayak",
+    "Gund",
+    "AI ML Engineer Pune",
+    "Machine Learning Engineer India",
     "Deep Learning",
     "Data Analyst",
     "Big Data Engineer",
     "Data Engineer",
     "Software Developer",
-    "Python",
-    "TypeScript",
-    "Node.js",
+    "Python Developer",
+    "Generative AI",
     "LLM",
-    "GenAI",
     "Pune",
     "India",
     "Portfolio",
+    "Chordz Technologies",
   ],
-  authors: [{ name: "Vinayak Rajendra Gund", url: "https://github.com/gundvinu1" }],
+  authors: [{ name: "Vinayak Rajendra Gund", url: "https://vinayakgund.in" }],
   creator: "Vinayak Rajendra Gund",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://vinayakgund.dev",
+    url: "https://vinayakgund.in",
     siteName: "Vinayak Rajendra Gund",
     title: "Vinayak Rajendra Gund | AI/ML Engineer & Software Developer",
     description:
@@ -78,8 +81,10 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Vinayak Rajendra Gund",
-  url: "https://vinayakgund.dev",
-  image: "https://vinayakgund.dev/og-image.svg",
+  alternateName: "Vinayak Gund",
+  url: "https://vinayakgund.in",
+  image: "https://vinayakgund.in/og-image.svg",
+  description: "AI/ML Engineer, Data Analyst, and Software Developer based in Pune, India.",
   sameAs: [
     "https://github.com/gundvinu1",
     "https://www.linkedin.com/in/vinayak-gund-a26817284",
@@ -100,7 +105,6 @@ const jsonLd = {
     addressCountry: "IN",
   },
   email: "gundvinayak1@gmail.com",
-  telephone: "+91-8767535697",
   knowsAbout: [
     "Artificial Intelligence",
     "Machine Learning",
@@ -109,8 +113,8 @@ const jsonLd = {
     "Big Data",
     "Software Development",
     "Python",
-    "TypeScript",
-    "Node.js",
+    "Generative AI",
+    "LLMs",
   ],
 };
 
