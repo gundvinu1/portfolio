@@ -7,25 +7,35 @@ import { skills } from "@/data/portfolio";
 import { SpotlightCard } from "@/components/AnimatedSection";
 
 const categoryColors: Record<string, { from: string; to: string; glow: string }> = {
-  "Programming":           { from: "#4F46E5", to: "#7C3AED", glow: "rgba(79,70,229,0.18)" },
+  "Programming":             { from: "#4F46E5", to: "#7C3AED", glow: "rgba(79,70,229,0.18)" },
   "Artificial Intelligence": { from: "#7C3AED", to: "#EC4899", glow: "rgba(124,58,237,0.18)" },
-  "Data Analytics":        { from: "#06B6D4", to: "#0EA5E9", glow: "rgba(6,182,212,0.18)" },
-  "Big Data":              { from: "#F97316", to: "#EF4444", glow: "rgba(249,115,22,0.18)" },
-  "Databases":             { from: "#22C55E", to: "#16A34A", glow: "rgba(34,197,94,0.18)" },
-  "Backend Development":   { from: "#64748B", to: "#475569", glow: "rgba(100,116,139,0.18)" },
-  "DevOps":                { from: "#0EA5E9", to: "#06B6D4", glow: "rgba(14,165,233,0.18)" },
-  "AI Development Tools":  { from: "#F59E0B", to: "#F97316", glow: "rgba(245,158,11,0.18)" },
-  "Soft Skills":           { from: "#EC4899", to: "#F43F5E", glow: "rgba(236,72,153,0.18)" },
+  "Data Analytics":          { from: "#06B6D4", to: "#0EA5E9", glow: "rgba(6,182,212,0.18)" },
+  "Big Data":                { from: "#F97316", to: "#EF4444", glow: "rgba(249,115,22,0.18)" },
+  "Big Data & Engineering":  { from: "#EA580C", to: "#DC2626", glow: "rgba(234,88,12,0.18)" },
+  "Databases":               { from: "#22C55E", to: "#16A34A", glow: "rgba(34,197,94,0.18)" },
+  "Backend Development":     { from: "#64748B", to: "#475569", glow: "rgba(100,116,139,0.18)" },
+  "DevOps":                  { from: "#0EA5E9", to: "#06B6D4", glow: "rgba(14,165,233,0.18)" },
+  "AI Development Tools":    { from: "#F59E0B", to: "#F97316", glow: "rgba(245,158,11,0.18)" },
+  "Soft Skills":             { from: "#EC4899", to: "#F43F5E", glow: "rgba(236,72,153,0.18)" },
 };
 
-function SkillBadge({ skill, delay, from, to }: { skill: string; delay: number; from: string; to: string }) {
+const badgeVariants = {
+  hidden: { opacity: 0, scale: 0.75, y: 8 },
+  visible: (custom: { from: string; to: string }) => ({
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring" as const, stiffness: 300, damping: 20 },
+  }),
+};
+
+function SkillBadge({ skill, from, to }: { skill: string; from: string; to: string }) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.span
-      initial={{ opacity: 0, scale: 0.75, y: 8 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay, type: "spring", stiffness: 300, damping: 20 }}
+      variants={badgeVariants}
+      custom={{ from, to }}
       whileHover={{ scale: 1.1, y: -2 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
@@ -41,7 +51,7 @@ function SkillBadge({ skill, delay, from, to }: { skill: string; delay: number; 
           initial={{ x: "-100%" }}
           animate={{ x: "200%" }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"
+          className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent pointer-events-none"
         />
       )}
       {skill}
@@ -65,7 +75,7 @@ export default function Skills() {
           <motion.div key={i}
             animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.9, 0.5] }}
             transition={{ duration: 6 + i * 2, repeat: Infinity, delay: i * 1.5 }}
-            className="absolute w-[450px] h-[450px] rounded-full blur-3xl"
+            className="absolute w-112.5 h-112.5 rounded-full blur-3xl"
             style={{ left: o.left, top: o.top, background: `radial-gradient(circle, ${o.color} 0%, transparent 70%)` }}
           />
         ))}
@@ -96,7 +106,7 @@ export default function Skills() {
             Skills &amp; <span className="gradient-text">Expertise</span>
           </h2>
           <p className="text-white/40 max-w-xl text-sm leading-relaxed">
-            9 domains spanning AI/ML, data engineering, analytics, backend development and beyond.
+            10 domains spanning AI/ML, big data engineering, analytics, backend development and beyond.
           </p>
         </motion.div>
 
@@ -127,7 +137,7 @@ export default function Skills() {
                     <motion.div
                       animate={{ x: ["-100%", "200%"] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: "linear", delay: catIdx * 0.2 }}
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent"
                     />
                   </div>
 
@@ -146,7 +156,7 @@ export default function Skills() {
                       <motion.div
                         whileHover={{ rotate: 15, scale: 1.15 }}
                         transition={{ type: "spring", stiffness: 300 }}
-                        className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
+                        className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0"
                         style={{
                           background: `linear-gradient(135deg, ${colors.from}20, ${colors.to}20)`,
                           border: `1px solid ${colors.from}30`,
@@ -168,18 +178,30 @@ export default function Skills() {
                       </motion.div>
                     </div>
 
-                    {/* Skill badges with individual hover shimmer */}
-                    <div className="flex flex-wrap gap-2">
-                      {items.map((skill, i) => (
+                    {/* Skill badges with stagger viewport entrance */}
+                    <motion.div
+                      className="flex flex-wrap gap-2"
+                      initial="hidden"
+                      animate={inView ? "visible" : "hidden"}
+                      variants={{
+                        hidden: {},
+                        visible: {
+                          transition: {
+                            staggerChildren: 0.04,
+                            delayChildren: catIdx * 0.07,
+                          },
+                        },
+                      }}
+                    >
+                      {items.map((skill) => (
                         <SkillBadge
                           key={skill}
                           skill={skill}
-                          delay={inView ? catIdx * 0.07 + i * 0.025 : 0}
                           from={colors.from}
                           to={colors.to}
                         />
                       ))}
-                    </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               </SpotlightCard>

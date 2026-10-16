@@ -121,7 +121,7 @@ export const projects: Project[] = [
     title: "AutoPrint",
     category: ["backend", "fullstack"],
     description:
-      "WhatsApp-based self-service printing platform where customers upload files, pay online, and collect printed documents with minimal staff involvement.",
+      "WhatsApp-based self-service printing platform where customers upload files, pay online, and collect printed documents with minimal staff involvement. Features an 8-state stateful text conversation engine, integrated Cashfree transaction gateways, and SumatraPDF automation for system-level print queues handled safely via Redis and BullMQ async workers.",
     tech: ["Node.js", "TypeScript", "React", "PostgreSQL", "Redis", "BullMQ", "Docker", "JWT"],
     features: [
       "Payment gateway",
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     title: "AI Automation Agent",
     category: ["ai", "backend"],
     description:
-      "Natural-language automation assistant for Gmail, Calendar, reporting, and productivity workflows using LLM-powered orchestration.",
+      "Natural-language automation assistant for Gmail, Calendar, reporting, and productivity workflows using LLM-powered orchestration. Relies on LangChain LLM orchestration layer logic alongside Google API integrations for automated cross-application reporting pipelines.",
     tech: ["Python", "FastAPI", "LangChain", "LLMs", "Google APIs", "PostgreSQL"],
     features: [
       "Natural language processing",
@@ -160,7 +160,7 @@ export const projects: Project[] = [
     title: "Credit Card Fraud Detection",
     category: ["ai", "data"],
     description:
-      "Machine learning system for detecting fraudulent transactions using classification models, feature engineering, and structured evaluation.",
+      "Machine learning system for detecting fraudulent transactions using classification models, feature engineering, and structured evaluation. Achieved 87% structural classification accuracy and engineered features that successfully reduced false-positive metrics by 18%.",
     tech: ["Python", "Scikit-Learn", "Pandas", "NumPy", "Matplotlib", "Seaborn"],
     features: [
       "Fraud detection",
@@ -236,6 +236,20 @@ export const skills = {
       "HDFS",
       "YARN",
       "Data Warehousing",
+      "ETL Pipelines",
+      "Distributed Computing",
+    ],
+  },
+  "Big Data & Engineering": {
+    icon: "ENG",
+    color: "from-orange-500 to-red-600",
+    items: [
+      "Apache Spark",
+      "PySpark",
+      "Apache Hadoop",
+      "Apache Kafka",
+      "Hive",
+      "HDFS",
       "ETL Pipelines",
       "Distributed Computing",
     ],

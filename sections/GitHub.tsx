@@ -62,7 +62,7 @@ export default function GitHub() {
     <section id="github" className="py-28 relative overflow-hidden">
       <div className="section-divider absolute top-0 left-0 right-0" />
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-3xl"
+        <div className="absolute top-0 left-0 w-125 h-125 rounded-full blur-3xl"
           style={{ background: "radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)" }} />
         <div className="absolute inset-0 grid-bg opacity-20" />
       </div>
@@ -164,7 +164,7 @@ export default function GitHub() {
             <div className="flex-1 rounded-xl overflow-hidden bg-black/20 border border-white/5 p-2">
               <Image
                 src={`https://ghchart.rshah.org/4F46E5/${personalInfo.githubUsername}`}
-                alt="GitHub Contribution Graph"
+                alt={`GitHub Contribution Activity Graph for Vinayak Gund (${personalInfo.githubUsername})`}
                 width={720}
                 height={160}
                 unoptimized
@@ -189,7 +189,7 @@ export default function GitHub() {
               className="card overflow-hidden shimmer-hover block"
             >
               {/* Mini banner */}
-              <div className={`h-16 bg-gradient-to-r ${repo.gradient} flex items-center px-4 gap-3`}>
+              <div className={`h-16 bg-linear-to-r ${repo.gradient} flex items-center px-4 gap-3`}>
                 <span className="text-2xl">{repo.icon}</span>
                 <span className="font-bold text-sm text-white/90 font-mono">{repo.name}</span>
               </div>

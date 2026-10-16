@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#4F46E5" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Rounded Square -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  <rect x="8" y="8" width="496" height="496" rx="120" stroke="url(#accentGrad)" stroke-width="4" stroke-opacity="0.3"/>
+  
+  <!-- Subtle Glow -->
+  <circle cx="256" cy="256" r="140" fill="url(#glowGrad)"/>
+  
+  <!-- Stylized Monogram V with Tech Brackets -->
+  <!-- Left Bracket < -->
+  <path d="M168 180L108 256L168 332" stroke="#38BDF8" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+  
+  <!-- Right Bracket > -->
+  <path d="M344 180L404 256L344 332" stroke="#A855F7" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+  
+  <!-- Center 'V' Symbol with Accent Nodes -->
+  <path d="M192 196L256 348L320 196" stroke="url(#accentGrad)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  
+  <!-- AI / Node Dot -->
+  <circle cx="256" cy="348" r="14" fill="#38BDF8"/>
+  <circle cx="192" cy="196" r="10" fill="#6366F1"/>
+  <circle cx="320" cy="196" r="10" fill="#A855F7"/>
+</svg>

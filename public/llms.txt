@@ -1,0 +1,33 @@
+# Vinayak Rajendra Gund — Engineering Portfolio
+> AI/ML Engineer, Software Developer, Data Analyst, and Big Data Engineer based in Pune, India.
+
+## Summary
+Vinayak Rajendra Gund is an AI/ML Engineer and Software Developer specializing in production-ready machine learning pipelines, LLM-powered automation agents, scalable backend architectures (Node.js, TypeScript, FastAPI), and distributed big data workflows (Apache Spark, Hadoop, Kafka).
+
+## Core Links
+- Website: https://vinayakgund.in
+- GitHub: https://github.com/gundvinu1
+- LinkedIn: https://www.linkedin.com/in/vinayak-gund-a26817284
+- Email: gundvinayak1@gmail.com
+- Resume: https://vinayakgund.in/resume.pdf
+
+## Key Projects
+- **AutoPrint**: WhatsApp-based self-service printing platform featuring an 8-state stateful text conversation engine, Cashfree transaction gateways, and SumatraPDF automation managed via Redis and BullMQ async workers. (Tech: Node.js, TypeScript, React, PostgreSQL, Redis, BullMQ, Docker). GitHub: https://github.com/gundvinu1/autoprint
+- **AI Automation Agent**: Natural-language automation assistant for Gmail, Calendar, reporting, and productivity workflows using LangChain LLM orchestration layer logic and Google API integrations. (Tech: Python, FastAPI, LangChain, LLMs, PostgreSQL). GitHub: https://github.com/gundvinu1/AI-Automation-Agent-
+- **Credit Card Fraud Detection**: Machine learning system for detecting fraudulent transactions using classification models, feature engineering (reducing false positives by 18%), and structured evaluation (87% accuracy). (Tech: Python, Scikit-Learn, Pandas, NumPy). GitHub: https://github.com/gundvinu1/Credit-Card-Fraud-Detection-
+- **Text to 3D Model Generation**: Deep learning NLP-to-3D representation pipeline concept converting natural language descriptions into 3D models using TensorFlow.
+
+## Technical Skills Matrix
+- **AI & Machine Learning**: PyTorch, TensorFlow, Scikit-Learn, LangChain, LLMs, Generative AI, Computer Vision, NLP, Prompt Engineering
+- **Languages**: Python, TypeScript, JavaScript, SQL, HTML5, CSS3
+- **Backend & Cloud**: Node.js, Express, FastAPI, REST APIs, Redis, BullMQ, Docker, Microservices
+- **Databases**: PostgreSQL, MySQL, Redis, MongoDB
+- **Big Data & Analytics**: Apache Spark, Apache Hadoop, Apache Kafka, Hive, HDFS, ETL Pipelines, Tableau, Pandas, NumPy, Power BI
+- **Developer Tools**: Git, GitHub, Linux/Bash, Postman, Vite, Next.js, Tailwind CSS
+
+## Experience
+- **Software Developer Intern** at Chordz Technologies Pvt Ltd (July 2025 – Present): AI-powered automation platforms, scalable backend services in Node.js/TypeScript, PostgreSQL, Redis, BullMQ, and Docker.
+- **Data Science / ML Intern** at Wisdom Sprouts IT Training Hub (Dec 2024 – Feb 2025): Data preprocessing workflows, EDA, predictive modeling pipelines, and Tableau business dashboards.
+
+## Education
+- **Bachelor of Engineering (B.E.) in Artificial Intelligence & Machine Learning**, Samarth College of Engineering & Management, Savitribai Phule Pune University (SPPU), Pune (2022 – 2026). CGPA: 8.10/10 (First Class with Distinction).

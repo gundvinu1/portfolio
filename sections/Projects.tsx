@@ -61,13 +61,13 @@ function ProjectCard({ project, i, inView }: {
       layout
       initial={{ opacity: 0, y: 32, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       style={{
         rotateX: rotX,
         rotateY: rotY,
         transformPerspective: 1000,
       }}
-      whileHover={{ y: -8 }}
+      whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleMouseLeave}
@@ -83,7 +83,7 @@ function ProjectCard({ project, i, inView }: {
       />
 
       {/* Banner */}
-      <div className={`h-44 bg-gradient-to-br ${gradients[i % 4]} relative overflow-hidden`}>
+      <div className={`h-44 bg-linear-to-br ${gradients[i % 4]} relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/25" />
 
         {/* Animated scan line on banner */}
@@ -134,7 +134,7 @@ function ProjectCard({ project, i, inView }: {
         </div>
 
         {/* Title overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent">
           <h3 className="font-bold text-lg text-white group-hover:text-indigo-200 transition-colors">
             {project.title}
           </h3>
@@ -219,7 +219,7 @@ export default function Projects() {
     <section id="projects" className="py-28 relative overflow-hidden">
       <div className="section-divider absolute top-0 left-0 right-0" />
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-3xl"
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 rounded-full blur-3xl"
           style={{ background: "radial-gradient(circle, rgba(79,70,229,0.06) 0%, transparent 70%)" }} />
         <div className="absolute inset-0 grid-bg opacity-25" />
       </div>
@@ -266,7 +266,7 @@ export default function Projects() {
                 <motion.div
                   animate={{ x: ["-100%", "200%"] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none"
+                  className="absolute inset-0 bg-linear-to-r from-transparent via-white/15 to-transparent pointer-events-none"
                 />
               )}
               <span>{f.icon}</span>

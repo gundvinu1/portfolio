@@ -79,7 +79,7 @@ export default function Navbar() {
                   className={`relative rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
                     active
                       ? "text-cyan-600 dark:text-white"
-                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-slate-900 dark:hover:text-white"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/4 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {active && (
@@ -102,6 +102,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.04, y: -1 }}
               whileTap={{ scale: 0.97 }}
+              aria-label="Download Vinayak Gund Resume (PDF)"
               className="hidden sm:inline-flex btn-primary min-h-10 px-3"
             >
               <Download className="h-4 w-4" />
@@ -163,7 +164,7 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-slate-900 dark:hover:text-white"
+                  className="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/4 hover:text-slate-900 dark:hover:text-white"
                 >
                   {link.label}
                 </Link>

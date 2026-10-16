@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useInView } from "framer-motion";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Download, Briefcase, Mail, ChevronDown, Code2, GitFork } from "lucide-react";
 import Image from "next/image";
@@ -18,11 +18,47 @@ const floatingCards = [
 ];
 
 const stats = [
-  { value: "4+", label: "Live Projects", icon: "🚀" },
-  { value: "8.10", label: "CGPA (Distinction)", icon: "🎓" },
-  { value: "5+", label: "Tech Domains", icon: "⚡" },
-  { value: "10+", label: "Technologies", icon: "🛠️" },
+  { value: "4+",  numVal: 4,  suffix: "+", label: "Core Projects",    icon: "🚀" },
+  { value: "8.10", numVal: 8.10, suffix: "",  label: "CGPA (Distinction)", icon: "🎓", isFloat: true },
+  { value: "3+",  numVal: 3,  suffix: "+", label: "Core Domains",     icon: "⚡" },
+  { value: "20+", numVal: 20, suffix: "+", label: "Tech Stack Tools", icon: "🛠️" },
 ];
+
+/** Viewport-triggered count-up via framer-motion spring */
+function AnimatedCounter({
+  numVal,
+  suffix = "",
+  isFloat = false,
+}: {
+  numVal: number;
+  suffix?: string;
+  isFloat?: boolean;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const motionVal = useMotionValue(0);
+  const springVal = useSpring(motionVal, { stiffness: 80, damping: 18, mass: 0.6 });
+  const [display, setDisplay] = useState(isFloat ? "0.00" : "0");
+
+  useEffect(() => {
+    if (inView) {
+      motionVal.set(numVal);
+    }
+  }, [inView, motionVal, numVal]);
+
+  useEffect(() => {
+    const unsub = springVal.on("change", (v) => {
+      setDisplay(isFloat ? v.toFixed(2) : String(Math.floor(v)));
+    });
+    return unsub;
+  }, [springVal, isFloat]);
+
+  return (
+    <span ref={ref}>
+      {display}{suffix}
+    </span>
+  );
+}
 
 function TypewriterRole({ roles }: { roles: string[] }) {
   const [idx, setIdx] = useState(0);
@@ -162,16 +198,16 @@ function ProfilePhoto() {
       >
         {/* Gradient border ring */}
         <div
-          className="rounded-full p-[3px]"
+          className="rounded-full p-0.75"
           style={{
             background: "linear-gradient(135deg, #4F46E5, #06B6D4, #22C55E, #C084FC)",
           }}
         >
-          <div className="rounded-full p-[3px] bg-[#09090B]">
+          <div className="rounded-full p-0.75 bg-[#09090B]">
             <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden">
               <Image
                 src="/vinayak.jpg"
-                alt="Vinayak Rajendra Gund"
+                alt="Vinayak Rajendra Gund — AI/ML Engineer and Software Developer in Pune, India"
                 fill
                 className="object-cover object-top"
                 priority
@@ -502,7 +538,13 @@ export default function Hero() {
                     >
                       {s.icon}
                     </motion.div>
-                    <div className="stat-num">{s.value}</div>
+                    <div className="stat-num">
+                      <AnimatedCounter
+                        numVal={s.numVal}
+                        suffix={s.suffix}
+                        isFloat={s.isFloat}
+                      />
+                    </div>
                     <div className="text-[10px] text-white/35 mt-1 font-medium leading-tight">{s.label}</div>
                   </div>
                 </motion.div>
@@ -543,7 +585,7 @@ export default function Hero() {
           </div>
 
           {/* ── RIGHT COLUMN: Profile photo ── */}
-          <div className="flex-shrink-0 flex items-center justify-center w-full lg:w-auto">
+          <div className="shrink-0 flex items-center justify-center w-full lg:w-auto">
             <ProfilePhoto />
           </div>
 
@@ -568,7 +610,7 @@ export default function Hero() {
         </motion.div>
         {/* Scroll line animation */}
         <motion.div
-          className="w-px h-12 bg-gradient-to-b from-white/20 to-transparent"
+          className="w-px h-12 bg-linear-to-b from-white/20 to-transparent"
           animate={{ scaleY: [0, 1, 0], originY: 0 }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />

@@ -1,18 +1,48 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { MapPin, Mail, Phone, Link2, GitFork, Sparkles, ArrowRight } from "lucide-react";
+import { MapPin, Mail, Phone, Link2, GitFork, Sparkles } from "lucide-react";
 import { personalInfo, interests } from "@/data/portfolio";
 
 const targetRoles = [
-  { label: "AI / ML Engineer", emoji: "🤖", color: "#818CF8" },
-  { label: "Data Analyst", emoji: "📊", color: "#38BDF8" },
-  { label: "Big Data Engineer", emoji: "⚡", color: "#FB923C" },
-  { label: "Data Engineer", emoji: "🔄", color: "#34D399" },
-  { label: "Software Developer", emoji: "💻", color: "#C084FC" },
-  { label: "Backend Developer", emoji: "⚙️", color: "#94A3B8" },
+  {
+    label: "AI / ML Engineer",
+    emoji: "🤖",
+    color: "#818CF8",
+    desc: "Building production-ready systems, orchestrating LLM workflows with LangChain, and deploying predictive data architectures.",
+  },
+  {
+    label: "Data Analyst",
+    emoji: "📊",
+    color: "#38BDF8",
+    desc: "Executing deep exploratory data analysis (EDA) and translating raw datasets into actionable executive insights.",
+  },
+  {
+    label: "Big Data Engineer",
+    emoji: "⚡",
+    color: "#FB923C",
+    desc: "Structuring distributed analytical workflows using enterprise platforms including Apache Spark and Hadoop.",
+  },
+  {
+    label: "Data Engineer",
+    emoji: "🔄",
+    color: "#34D399",
+    desc: "Designing optimized ETL pipelines, maintaining stateful caching mechanisms, and managing relational database schemas.",
+  },
+  {
+    label: "Software Developer",
+    emoji: "💻",
+    color: "#C084FC",
+    desc: "Developing robust backend infrastructures using Node.js and TypeScript with strict asynchronous processing systems.",
+  },
+  {
+    label: "Backend Developer",
+    emoji: "⚙️",
+    color: "#94A3B8",
+    desc: "Architecting scalable REST API services, middleware layers, and secure authentication flows for production applications.",
+  },
 ];
 
 const contactItems = [
@@ -26,6 +56,8 @@ const contactItems = [
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [activeRole, setActiveRole] = useState(0);
+  const activeTab = targetRoles[activeRole];
 
   return (
     <section id="about" className="py-28 relative overflow-hidden">
@@ -33,9 +65,9 @@ export default function About() {
       <div className="section-divider mb-0 absolute top-0 left-0 right-0" />
 
       <div className="absolute inset-0">
-        <div className="absolute top-20 right-0 w-[500px] h-[500px] rounded-full blur-3xl"
+        <div className="absolute top-20 right-0 w-125 h-125 rounded-full blur-3xl"
           style={{ background: "radial-gradient(circle, rgba(79,70,229,0.06) 0%, transparent 70%)" }} />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-3xl"
+        <div className="absolute bottom-0 left-0 w-100 h-100 rounded-full blur-3xl"
           style={{ background: "radial-gradient(circle, rgba(6,182,212,0.05) 0%, transparent 70%)" }} />
         <div className="absolute inset-0 dot-bg opacity-40" />
       </div>
@@ -82,7 +114,7 @@ export default function About() {
                 <motion.div
                   animate={{ scaleY: [1, 1.3, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-1 h-6 rounded-full bg-gradient-to-b from-indigo-500 to-cyan-500"
+                  className="w-1 h-6 rounded-full bg-linear-to-b from-indigo-500 to-cyan-500"
                 />
                 <span className="text-sm font-bold text-white/80">My Story</span>
               </div>
@@ -100,7 +132,7 @@ export default function About() {
                 <motion.div
                   animate={{ scaleY: [1, 1.3, 1] }}
                   transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                  className="w-1 h-6 rounded-full bg-gradient-to-b from-cyan-500 to-green-500"
+                  className="w-1 h-6 rounded-full bg-linear-to-b from-cyan-500 to-green-500"
                 />
                 <span className="text-sm font-bold text-white/80">Contact Details</span>
               </div>
@@ -117,7 +149,7 @@ export default function About() {
                     <motion.div
                       whileHover={{ scale: 1.15, rotate: 10 }}
                       transition={{ type: "spring", stiffness: 300 }}
-                      className="w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center"
+                      className="w-8 h-8 rounded-xl shrink-0 flex items-center justify-center"
                       style={{ background: `${color}18` }}
                     >
                       <Icon className="w-3.5 h-3.5" style={{ color }} />
@@ -165,14 +197,14 @@ export default function About() {
                   }}
                 />
                 <div
-                  className="rounded-full p-[3px] relative"
+                  className="rounded-full p-0.75 relative"
                   style={{ background: "linear-gradient(135deg, #4F46E5, #06B6D4, #22C55E)" }}
                 >
-                  <div className="rounded-full p-[2px] bg-[#09090B] dark:bg-[#09090B]">
+                  <div className="rounded-full p-0.5 bg-[#09090B] dark:bg-[#09090B]">
                     <div className="relative w-24 h-24 rounded-full overflow-hidden">
                       <Image
                         src="/vinayak.jpg"
-                        alt="Vinayak Rajendra Gund"
+                        alt="Vinayak Rajendra Gund — AI/ML Engineer profile thumbnail"
                         fill
                         className="object-cover object-top"
                         sizes="96px"
@@ -194,7 +226,7 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* Target roles */}
+            {/* Target roles — interactive tab picker */}
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -202,24 +234,55 @@ export default function About() {
               className="card p-6"
             >
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-1 h-6 rounded-full bg-gradient-to-b from-purple-500 to-pink-500" />
+                <div className="w-1 h-6 rounded-full bg-linear-to-b from-purple-500 to-pink-500" />
                 <span className="text-sm font-bold text-white/80">Open for Roles</span>
               </div>
-              <div className="space-y-2">
+
+              {/* Tab buttons */}
+              <div className="flex flex-wrap gap-2 mb-4">
                 {targetRoles.map(({ label, emoji, color }, i) => (
-                  <motion.div
+                  <motion.button
                     key={label}
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.3 + i * 0.06 }}
-                    whileHover={{ x: 5 }}
-                    className="flex items-center gap-3 p-2.5 rounded-xl bg-white/3 border border-white/4 hover:border-white/10 transition-all cursor-default"
+                    onClick={() => setActiveRole(i)}
+                    whileHover={{ scale: 1.05, y: -1 }}
+                    whileTap={{ scale: 0.97 }}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] font-semibold transition-all duration-200 border ${
+                      activeRole === i
+                        ? "border-transparent text-white"
+                        : "bg-white/3 border-white/5 text-white/45 hover:text-white/75"
+                    }`}
+                    style={activeRole === i ? { background: `${color}28`, borderColor: `${color}55`, color } : {}}
                   >
-                    <span className="text-base">{emoji}</span>
-                    <span className="text-sm font-semibold" style={{ color }}>{label}</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" style={{ color }} />
-                  </motion.div>
+                    <span>{emoji}</span>
+                    <span>{label}</span>
+                  </motion.button>
                 ))}
+              </div>
+
+              {/* Animated tab content */}
+              <div className="relative overflow-hidden min-h-14">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={activeRole}
+                    initial={{ opacity: 0, x: 18 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -18 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className="flex items-start gap-3 p-3 rounded-xl border"
+                    style={{
+                      background: `${activeTab.color}10`,
+                      borderColor: `${activeTab.color}30`,
+                    }}
+                  >
+                    <span className="text-xl mt-0.5 shrink-0">{activeTab.emoji}</span>
+                    <div>
+                      <p className="text-[13px] font-semibold mb-1" style={{ color: activeTab.color }}>
+                        {activeTab.label}
+                      </p>
+                      <p className="text-xs text-white/55 leading-relaxed">{activeTab.desc}</p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </motion.div>
 
@@ -231,7 +294,7 @@ export default function About() {
               className="card p-6"
             >
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-1 h-6 rounded-full bg-gradient-to-b from-green-500 to-teal-500" />
+                <div className="w-1 h-6 rounded-full bg-linear-to-b from-green-500 to-teal-500" />
                 <span className="text-sm font-bold text-white/80">Interests</span>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -245,7 +308,7 @@ export default function About() {
                     className="tag cursor-default text-[11px] relative overflow-hidden group"
                   >
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100"
                       animate={{ x: ["-100%", "200%"] }}
                       transition={{ duration: 0.6, ease: "easeInOut" }}
                     />

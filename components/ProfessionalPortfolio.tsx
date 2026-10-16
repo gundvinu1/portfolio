@@ -1,10 +1,19 @@
 "use client";
 
-import { useMemo, useState, type ComponentType, type FormEvent } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo, useState, type ComponentType, type FormEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { AnimatedSection, StaggerContainer, staggerItem, MagneticCard, CountUp } from "@/components/AnimatedSection";
 import {
+  AnimatedSection,
+  StaggerContainer,
+  staggerItem,
+  MagneticCard,
+  CountUp,
+  FloatingParticles,
+  SpotlightCard,
+} from "@/components/AnimatedSection";
+import {
+  ArrowUp,
   ArrowUpRight,
   Award,
   BarChart3,
@@ -12,8 +21,10 @@ import {
   Briefcase,
   Building2,
   Calendar,
+  Check,
   CheckCircle2,
   Code2,
+  Copy,
   Database,
   Download,
   ExternalLink,
@@ -71,10 +82,10 @@ const projectFilters: { id: ProjectFilter; label: string }[] = [
 ];
 
 const heroStats = [
-  { value: "4+", label: "Applied projects", numVal: 4, suffix: "+" },
-  { value: "8.10", label: "CGPA", numVal: 810, suffix: "" },
-  { value: "5+", label: "Engineering domains", numVal: 5, suffix: "+" },
-  { value: "25+", label: "Tools and technologies", numVal: 25, suffix: "+" },
+  { value: "4+",  label: "Core Projects",    numVal: 4,  suffix: "+", color: "#38bdf8" },
+  { value: "8.10", label: "CGPA",              numVal: 810, suffix: "", color: "#f59e0b" },
+  { value: "3+",  label: "Core Domains",     numVal: 3,  suffix: "+", color: "#a855f7" },
+  { value: "20+", label: "Tech Stack Tools", numVal: 20, suffix: "+", color: "#34d399" },
 ];
 
 const projectIcons = [Server, Brain, BarChart3, Database];
@@ -120,6 +131,20 @@ export default function ProfessionalPortfolio() {
   const [form, setForm] = useState<ContactForm>(contactInitialState);
   const [errors, setErrors] = useState<Partial<Record<keyof ContactForm, string>>>({});
   const [sent, setSent] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personalInfo.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2200);
+  };
 
   const filteredProjects = useMemo(() => {
     if (activeFilter === "all") return projects;
@@ -162,8 +187,13 @@ export default function ProfessionalPortfolio() {
 
   return (
     <main className="relative overflow-hidden">
-      <section id="hero" className="relative border-b border-slate-200/30 pt-24 dark:border-white/8 sm:pt-32 lg:min-h-[92vh]">
-        <div className="absolute inset-0 grid-bg opacity-35" />
+      <section id="hero" className="relative border-b border-slate-200/30 pt-24 dark:border-white/8 sm:pt-32 lg:min-h-[92vh] overflow-hidden">
+        {/* Ambient glowing radial orbs & particles */}
+        <div className="ambient-glow-1" />
+        <div className="ambient-glow-2" />
+        <FloatingParticles count={20} colors={["#38BDF8", "#818CF8", "#34D399", "#C084FC"]} />
+        <div className="absolute inset-0 grid-bg opacity-30" />
+
         <div className="container-shell relative z-10 grid items-center gap-8 py-10 sm:gap-10 sm:py-14 lg:min-h-[calc(92vh-7rem)] lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:py-16">
           <motion.div
             initial={{ opacity: 0, y: 32 }}
@@ -174,32 +204,35 @@ export default function ProfessionalPortfolio() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/8 px-3 py-1.5 text-xs font-semibold leading-5 text-emerald-600 dark:text-emerald-300 sm:mb-6"
+              className="mb-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3.5 py-1.5 text-xs font-semibold leading-5 text-emerald-600 dark:text-emerald-300 shadow-sm backdrop-blur-md sm:mb-6"
             >
               <motion.span
                 animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="h-2 w-2 rounded-full bg-emerald-400"
+                className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"
               />
               Fresher — Open to Internships &amp; Entry-level Roles
             </motion.div>
 
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
-              Portfolio
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-cyan-600 dark:text-cyan-400">
+              AI / ML &amp; Software Engineering
             </p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="max-w-4xl break-words text-[clamp(2.35rem,12vw,4.75rem)] font-semibold leading-[1.05] text-slate-900 dark:text-white sm:text-6xl lg:text-7xl"
+              className="max-w-4xl wrap-break-word text-[clamp(2.35rem,12vw,4.75rem)] font-bold tracking-tight leading-[1.05] sm:text-6xl lg:text-7xl"
             >
-              {personalInfo.name}
+              <span className="bg-linear-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-cyan-100 dark:to-slate-300 bg-clip-text text-transparent">
+                {personalInfo.name}
+              </span>
+              <span className="sr-only"> — AI/ML Engineer, Software Developer &amp; Data Analyst Portfolio</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="mt-5 max-w-2xl text-lg leading-8 text-slate-500 dark:text-slate-300 sm:text-xl"
+              className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300 sm:text-xl font-normal"
             >
               {personalInfo.tagline}
             </motion.p>
@@ -210,15 +243,15 @@ export default function ProfessionalPortfolio() {
               transition={{ duration: 0.6, delay: 0.45 }}
               className="mt-7 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap"
             >
-              <a href={personalInfo.resumeUrl} target="_blank" className="btn-primary w-full sm:w-auto" rel="noopener noreferrer">
+              <a href={personalInfo.resumeUrl} target="_blank" className="btn-primary w-full sm:w-auto" rel="noopener noreferrer" aria-label="Download Vinayak Gund Resume (PDF)">
                 <Download className="h-4 w-4" />
                 Resume
               </a>
-              <a href="#projects" className="btn-secondary w-full sm:w-auto">
+              <a href="#projects" className="btn-secondary w-full sm:w-auto" aria-label="View Vinayak Gund Core Projects">
                 <FolderOpen className="h-4 w-4" />
                 View Projects
               </a>
-              <a href={`mailto:${personalInfo.email}`} className="btn-secondary w-full sm:w-auto">
+              <a href={`mailto:${personalInfo.email}`} className="btn-secondary w-full sm:w-auto" aria-label="Send email to Vinayak Gund">
                 <Mail className="h-4 w-4" />
                 Contact
               </a>
@@ -234,11 +267,11 @@ export default function ProfessionalPortfolio() {
                 <MapPin className="h-4 w-4 text-cyan-500" />
                 {personalInfo.location}
               </span>
-              <a className="inline-flex items-center gap-2 hover:text-slate-800 dark:hover:text-white" href={personalInfo.github} target="_blank" rel="noopener noreferrer">
+              <a className="inline-flex items-center gap-2 hover:text-slate-800 dark:hover:text-white" href={personalInfo.github} target="_blank" rel="noopener noreferrer" aria-label="Visit Vinayak Gund GitHub Profile">
                 <GitFork className="h-4 w-4 text-cyan-500" />
                 GitHub
               </a>
-              <a className="inline-flex items-center gap-2 hover:text-slate-800 dark:hover:text-white" href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer">
+              <a className="inline-flex items-center gap-2 hover:text-slate-800 dark:hover:text-white" href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Visit Vinayak Gund LinkedIn Profile">
                 <Link2 className="h-4 w-4 text-cyan-500" />
                 LinkedIn
               </a>
@@ -316,6 +349,71 @@ export default function ProfessionalPortfolio() {
                 />
               </motion.div>
 
+              {/* Floating Tech Badges around avatar */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
+                className="hidden sm:block absolute -left-8 top-6 z-20"
+              >
+                <motion.div
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
+                  className="flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-white/85 dark:bg-slate-900/90 px-3 py-1 shadow-lg backdrop-blur-md"
+                >
+                  <span className="h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_8px_#f97316]" />
+                  <span className="text-[11px] font-semibold text-slate-800 dark:text-white/90">PyTorch</span>
+                </motion.div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.0, type: "spring", stiffness: 200 }}
+                className="hidden sm:block absolute -right-8 top-12 z-20"
+              >
+                <motion.div
+                  animate={{ y: [0, 7, 0] }}
+                  transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  className="flex items-center gap-1.5 rounded-full border border-cyan-400/25 bg-white/85 dark:bg-slate-900/90 px-3 py-1 shadow-lg backdrop-blur-md"
+                >
+                  <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8]" />
+                  <span className="text-[11px] font-semibold text-slate-800 dark:text-white/90">FastAPI</span>
+                </motion.div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
+                className="hidden sm:block absolute -left-6 bottom-10 z-20"
+              >
+                <motion.div
+                  animate={{ y: [0, 6, 0] }}
+                  transition={{ duration: 4.0, repeat: Infinity, ease: "easeInOut", delay: 1.0 }}
+                  className="flex items-center gap-1.5 rounded-full border border-indigo-400/25 bg-white/85 dark:bg-slate-900/90 px-3 py-1 shadow-lg backdrop-blur-md"
+                >
+                  <span className="h-2 w-2 rounded-full bg-indigo-400 shadow-[0_0_8px_#818cf8]" />
+                  <span className="text-[11px] font-semibold text-slate-800 dark:text-white/90">TypeScript</span>
+                </motion.div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.4, type: "spring", stiffness: 200 }}
+                className="hidden sm:block absolute -right-6 bottom-8 z-20"
+              >
+                <motion.div
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                  className="flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-white/85 dark:bg-slate-900/90 px-3 py-1 shadow-lg backdrop-blur-md"
+                >
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+                  <span className="text-[11px] font-semibold text-slate-800 dark:text-white/90">Apache Spark</span>
+                </motion.div>
+              </motion.div>
+
               {/* Photo with gradient border */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
@@ -324,14 +422,14 @@ export default function ProfessionalPortfolio() {
                 whileHover={{ scale: 1.03 }}
               >
                 <div
-                  className="rounded-full p-[3px]"
+                  className="rounded-full p-0.75"
                   style={{ background: "linear-gradient(135deg, #4F46E5, #06B6D4, #22C55E, #C084FC)" }}
                 >
-                  <div className="rounded-full p-[3px] bg-white dark:bg-[#09090B]">
+                  <div className="rounded-full p-0.75 bg-white dark:bg-[#09090B]">
                     <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full overflow-hidden">
                       <Image
                         src="/vinayak.jpg"
-                        alt="Vinayak Rajendra Gund"
+                        alt="Vinayak Rajendra Gund — AI/ML Engineer and Software Developer in Pune, India"
                         fill
                         className="object-cover object-top"
                         priority
@@ -377,21 +475,29 @@ export default function ProfessionalPortfolio() {
               {heroStats.map((stat, i) => (
                 <MagneticCard
                   key={stat.label}
-                  className="card cursor-default p-3 sm:p-4"
+                  className="card cursor-default p-3.5 sm:p-4 group relative overflow-hidden"
                 >
+                  <div
+                    className="absolute top-0 inset-x-0 h-0.5 opacity-70 group-hover:opacity-100 transition-opacity"
+                    style={{ background: `linear-gradient(90deg, transparent, ${stat.color}, transparent)` }}
+                  />
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: stat.color, boxShadow: `0 0 6px ${stat.color}` }} />
+                    <span className="text-[10px] font-mono font-medium text-slate-400 dark:text-slate-500">PROD</span>
+                  </div>
                   <motion.div
                     initial={{ opacity: 0, scale: 0.85 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.6 + i * 0.1, type: "spring", stiffness: 260 }}
                   >
-                    <div className="text-xl font-bold text-cyan-600 dark:text-cyan-300 sm:text-2xl">
+                    <div className="text-xl font-bold text-slate-900 dark:text-white sm:text-2xl tracking-tight">
                       {stat.label === "CGPA" ? (
-                        <span>8.10</span>
+                        <span style={{ color: stat.color }}>8.10</span>
                       ) : (
                         <CountUp value={stat.numVal} suffix={stat.suffix} />
                       )}
                     </div>
-                    <div className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{stat.label}</div>
+                    <div className="mt-1 text-xs font-medium leading-5 text-slate-500 dark:text-slate-400">{stat.label}</div>
                   </motion.div>
                 </MagneticCard>
               ))}
@@ -410,15 +516,34 @@ export default function ProfessionalPortfolio() {
           />
 
           <StaggerContainer className="grid gap-3 sm:gap-4 lg:grid-cols-3">
-            {personalInfo.roles.map((role) => (
-              <motion.div key={role} variants={staggerItem} className="card p-4 sm:p-5">
-                <CheckCircle2 className="mb-4 h-5 w-5 text-emerald-500 dark:text-emerald-300" />
-                <h3 className="font-semibold text-slate-900 dark:text-white">{role}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
-                  Applied experience across production workflows, analytics, automation, and scalable software systems.
-                </p>
-              </motion.div>
-            ))}
+            {personalInfo.roles.map((role) => {
+              const roleDescriptions: Record<string, string> = {
+                "AI / ML Engineer": "Building production-ready systems, orchestrating LLM workflows with LangChain, and deploying predictive data architectures.",
+                "Software Developer": "Developing robust backend infrastructures using Node.js and TypeScript with strict asynchronous processing systems.",
+                "Data Analyst": "Executing deep exploratory data analysis (EDA) and translating raw datasets into actionable executive insights.",
+                "Big Data Engineer": "Structuring distributed analytical workflows using enterprise platforms including Apache Spark and Hadoop.",
+                "Data Engineer": "Designing optimized ETL pipelines, maintaining stateful caching mechanisms, and managing relational database schemas.",
+              };
+              const desc = roleDescriptions[role] ?? "Applied experience across production workflows, analytics, automation, and scalable software systems.";
+              return (
+                <motion.div key={role} variants={staggerItem} className="card p-4 sm:p-5">
+                  <CheckCircle2 className="mb-4 h-5 w-5 text-emerald-500 dark:text-emerald-300" />
+                  <h3 className="font-semibold text-slate-900 dark:text-white">{role}</h3>
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.p
+                      key={role}
+                      initial={{ opacity: 0, x: 16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -16 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400"
+                    >
+                      {desc}
+                    </motion.p>
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </StaggerContainer>
 
           <AnimatedSection delay={0.2} className="mt-8 flex flex-wrap gap-2">
@@ -432,7 +557,7 @@ export default function ProfessionalPortfolio() {
       </section>
 
 
-      <section id="experience" className="section-block border-y border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/[0.015]">
+      <section id="experience" className="section-block border-y border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/1.5">
         <div className="container-shell">
           <SectionHeader
             eyebrow="Experience"
@@ -453,10 +578,10 @@ export default function ProfessionalPortfolio() {
                     <h3 className="mt-2 text-xl font-semibold text-slate-900 dark:text-white">{item.role}</h3>
                   </div>
                   <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/[0.04] px-3 py-1 text-slate-600 dark:text-slate-300">
+                    <span className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/4 px-3 py-1 text-slate-600 dark:text-slate-300">
                       {item.type}
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/[0.04] px-3 py-1 text-slate-600 dark:text-slate-300">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/4 px-3 py-1 text-slate-600 dark:text-slate-300">
                       <Calendar className="h-3.5 w-3.5" />
                       {item.duration}
                     </span>
@@ -511,17 +636,27 @@ export default function ProfessionalPortfolio() {
             {filteredProjects.map((project, index) => {
               const Icon = projectIcons[index % projectIcons.length];
               return (
-              <motion.article key={project.id} variants={staggerItem} className="card flex flex-col p-4 sm:p-6">
+                <SpotlightCard
+                  key={project.id}
+                  glowColor="rgba(56, 189, 248, 0.1)"
+                  className="card flex flex-col p-5 sm:p-6 relative group"
+                >
+                  <div
+                    className="absolute top-0 inset-x-0 h-0.5 opacity-70 group-hover:opacity-100 transition-opacity"
+                    style={{ background: `linear-gradient(90deg, #38bdf8, #818cf8, #34d399)` }}
+                  />
                   <div className="flex items-start justify-between gap-3 sm:gap-4">
                     <div className="flex min-w-0 gap-3 sm:gap-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-600 dark:text-cyan-300 sm:h-12 sm:w-12">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-cyan-400/15 to-indigo-400/15 border border-cyan-400/20 text-cyan-600 dark:text-cyan-300 sm:h-12 sm:w-12 shadow-sm">
                         <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-base font-semibold leading-6 text-slate-900 dark:text-white sm:text-lg">{project.title}</h3>
-                        <div className="mt-2 flex flex-wrap gap-2">
+                        <h3 className="text-base font-semibold leading-6 text-slate-900 dark:text-white sm:text-lg group-hover:text-cyan-500 dark:group-hover:text-cyan-300 transition-colors">
+                          {project.title}
+                        </h3>
+                        <div className="mt-2 flex flex-wrap gap-1.5">
                           {project.category.map((category) => (
-                            <span key={category} className="tag capitalize">
+                            <span key={category} className="tag capitalize text-[11px] py-0.5 px-2.5">
                               {category}
                             </span>
                           ))}
@@ -552,29 +687,29 @@ export default function ProfessionalPortfolio() {
                     ))}
                   </div>
 
-                  <div className="mt-5 flex flex-wrap gap-2 border-t border-slate-200 dark:border-white/8 pt-5">
+                  <div className="mt-5 flex flex-wrap gap-2 border-t border-slate-200/60 dark:border-white/8 pt-5">
                     {project.tech.map((tech) => (
-                      <span key={tech} className="skill-badge">
+                      <span key={tech} className="skill-badge text-[11px] py-1 px-2.5 hover:border-cyan-400/40 hover:text-cyan-400 transition-colors">
                         {tech}
                       </span>
                     ))}
                   </div>
 
-                  <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+                  <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                     {project.github ? (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-secondary w-full sm:w-auto">
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-secondary w-full sm:w-auto" aria-label={`View ${project.title} GitHub repository`}>
                         <GitFork className="h-4 w-4" />
                         Repository
                       </a>
                     ) : null}
                     {project.live ? (
-                      <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn-secondary w-full sm:w-auto">
+                      <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn-primary w-full sm:w-auto" aria-label={`View ${project.title} live demonstration`}>
                         <ExternalLink className="h-4 w-4" />
-                        Live
+                        Live Demo
                       </a>
                     ) : null}
                   </div>
-                </motion.article>
+                </SpotlightCard>
               );
             })}
           </StaggerContainer>
@@ -582,7 +717,7 @@ export default function ProfessionalPortfolio() {
       </section>
 
 
-      <section id="skills" className="section-block border-y border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/[0.015]">
+      <section id="skills" className="section-block border-y border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/1.5">
         <div className="container-shell">
           <SectionHeader
             eyebrow="Skills"
@@ -649,7 +784,7 @@ export default function ProfessionalPortfolio() {
                     <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">{item.university}</p>
                   </div>
                   <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/[0.04] px-3 py-1 text-slate-600 dark:text-slate-300">
+                    <span className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/4 px-3 py-1 text-slate-600 dark:text-slate-300">
                       {item.duration}
                     </span>
                     <span className="rounded-full border border-emerald-400/20 bg-emerald-400/8 px-3 py-1 text-emerald-600 dark:text-emerald-300">
@@ -669,7 +804,7 @@ export default function ProfessionalPortfolio() {
         </div>
       </section>
 
-      <section id="data-expertise" className="section-block border-y border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/[0.015]">
+      <section id="data-expertise" className="section-block border-y border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/1.5">
         <div className="container-shell">
           <SectionHeader
             eyebrow="Data Expertise"
@@ -702,7 +837,7 @@ export default function ProfessionalPortfolio() {
               </p>
               <div className="mt-5 grid gap-2">
                 {bigDataTech.slice(0, 6).map((item) => (
-                  <div key={item.name} className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/[0.03] px-3 py-2">
+                  <div key={item.name} className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/3 px-3 py-2">
                     <span className="text-sm text-slate-800 dark:text-white">{item.name}</span>
                     <span className="text-xs text-slate-400 dark:text-slate-500">{item.icon}</span>
                   </div>
@@ -758,7 +893,7 @@ export default function ProfessionalPortfolio() {
         </div>
       </section>
 
-      <section id="contact" className="section-block border-t border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/[0.015]">
+      <section id="contact" className="section-block border-t border-slate-200/40 dark:border-white/8 bg-slate-50/50 dark:bg-white/1.5">
         <div className="container-shell">
           <SectionHeader
             eyebrow="Contact"
@@ -780,7 +915,7 @@ export default function ProfessionalPortfolio() {
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-600 dark:text-cyan-300">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">{label}</p>
                     {href ? (
                       <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="block truncate text-sm text-slate-700 dark:text-slate-200 hover:text-cyan-600 dark:hover:text-white">
@@ -790,6 +925,17 @@ export default function ProfessionalPortfolio() {
                       <p className="truncate text-sm text-slate-700 dark:text-slate-200">{value}</p>
                     )}
                   </div>
+                  {label === "Email" && (
+                    <button
+                      type="button"
+                      onClick={handleCopyEmail}
+                      className="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-cyan-400/25 bg-cyan-400/10 text-cyan-600 dark:text-cyan-300 hover:bg-cyan-400/20 transition-all"
+                      aria-label="Copy email address"
+                    >
+                      {copiedEmail ? <Check className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                      <span>{copiedEmail ? "Copied" : "Copy"}</span>
+                    </button>
+                  )}
                 </div>
               ))}
             </AnimatedSection>
@@ -854,6 +1000,24 @@ export default function ProfessionalPortfolio() {
           </div>
         </div>
       </section>
+
+      {/* Floating Back to Top button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.1, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/80 dark:border-white/10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-xl shadow-black/10 text-slate-700 dark:text-slate-200 hover:text-cyan-500 hover:border-cyan-400/50 transition-colors"
+            aria-label="Back to top"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
